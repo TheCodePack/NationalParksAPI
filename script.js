@@ -18,7 +18,7 @@ function displayParks(responseJson) {
         $('#results-list').append(
             `<li><h3>${responseJson.data[i].name}</h3>
             <p>${responseJson.data[i].url}</p>
-            <img src='${responseJson.data[i].description}'>
+            <p>${responseJson.data[i].description}<p/>
             </li>`
           )};   
     }
