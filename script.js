@@ -13,13 +13,21 @@ function formatQueryParams(params) {
 function displayParks(responseJson) {
     console.log(responseJson);
     $('#results-list').empty();
-}
 
-function getParks (query, limit) {
+    for (let i = 0; i < responseJson.data.length; i++) {
+        $('#results-list').append(
+            `<li><h3>${responseJson.data[i].name}</h3>
+            <p>${responseJson.data[i].url}</p>
+            <img src='${responseJson.data[i].description}'>
+            </li>`
+          )};   
+    }
+
+function getParks (query, limit=10) {
     const params = {
         api_key: apiKey,
-        q:query,
-        limit
+        limit,
+        stateCode:query 
     };
     const queryString = formatQueryParams(params)
     const url = searchURL + '?' + queryString;
@@ -43,7 +51,7 @@ function watchForm() {
     $('form').submit(event => {
       event.preventDefault();
       const searchTerm = $('#js-search-term').val();
-      const maxResults = $('#js-max-results').val();
+      const limit = $('#js-limit').val();
       getParks(searchTerm, limit);
     });
   }
