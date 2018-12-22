@@ -15,3 +15,38 @@ function displayParks(responseJson) {
     $('#results-list').empty();
 }
 
+function getParks (query, limit) {
+    const params = {
+        api_key: apiKey,
+        q:query,
+        limit
+    };
+    const queryString = formatQueryParams(params)
+    const url = searchURL + '?' + queryString;
+
+    console.log(url);
+
+    fetch(url)
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error(response.statusText);
+        })
+        .then(responseJson => displayParks(responseJson))
+        .catch(err => {
+            $('#js-error-message').text(`Something went wrong: ${err.message}`);
+        });
+}
+
+function watchForm() {
+    $('form').submit(event => {
+      event.preventDefault();
+      const searchTerm = $('#js-search-term').val();
+      const maxResults = $('#js-max-results').val();
+      getParks(searchTerm, limit);
+    });
+  }
+  
+  $(watchForm);
+
