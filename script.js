@@ -20,7 +20,9 @@ function displayParks(responseJson) {
             <p>${responseJson.data[i].url}</p>
             <p>${responseJson.data[i].description}<p/>
             </li>`
-          )};   
+          )};
+
+    $('#results').removeClass('hidden');   
     }
 
 function getParks (query, limit=10) {
@@ -51,7 +53,7 @@ function watchForm() {
     $('form').submit(event => {
       event.preventDefault();
       const searchTerm = $('#js-search-term').val();
-      const limit = $('#js-limit').val();
+      const limit = $('#js-limit').val() - 1;
       getParks(searchTerm, limit);
     });
   }
